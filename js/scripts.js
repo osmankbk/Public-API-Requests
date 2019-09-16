@@ -1,13 +1,27 @@
 const urlRequest = 'https://randomuser.me/api/?results=12';
-const urlIndividual = 'https://randomuser.me/api';
 const galleryDiv = document.getElementById('gallery');
 const body = document.querySelector('body');
+const searchDiv = document.querySelector('.search-container');
 
-/*const elementCreate = (elementName, property, value) => {
+//DRY function for creating elements
+  const elementCreate = (elementName, property, value) => {
   const element = document.createElement(elementName);
   element[property] = value;
   return element;
-}*/
+}
+
+//Search section elements
+const form = document.createElement('form');
+const input = elementCreate('input', 'className', 'search-input');
+const secondInput = elementCreate('input', 'className', 'search-submit');
+form.action = "#";
+form.method = "get";
+input.type = 'search';
+input.placeholder = "Search...";
+secondInput.type = 'submit';
+form.appendChild(input);
+form.appendChild(secondInput);
+searchDiv.appendChild(form);
 
 async function shortCutRequest(url) {
   try {
@@ -24,39 +38,43 @@ async function fetchRequest(url) {
 
   const response = await shortCutRequest(url);
   const employeeResponse = response.results.forEach(user => {
-    //const containerDiv = elementCreate('div', 'class', 'card');
-    //const imageDiv = elementCreate('div', 'class', 'card-img-container');
-    //const infoDiv = elementCreate('div', 'class', 'card-info-container');
 
-    const containerDiv = document.createElement('div');
-    const imageDiv = document.createElement('div');;
-    const infoDiv = document.createElement('div');;
-    containerDiv.classList.add('card');
-    imageDiv.classList.add('card-img-container');
-    infoDiv.classList.add('card-info-container');
+//display randomuser section
+    const containerDiv = elementCreate('div', 'className', 'card');
+    const imageDiv = elementCreate('div', 'className', 'card-img-container');
+    const infoDiv = elementCreate('div', 'className', 'card-info-container');
+
     containerDiv.appendChild(imageDiv);
     containerDiv.appendChild(infoDiv);
     galleryDiv.appendChild(containerDiv);
+
     imageDiv.innerHTML = `<img class="card-img" src=${user.picture.large} alt="profile picure">`;
     infoDiv.innerHTML = `<h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
       <p class="card-text">${user.email}</p>
       <p class="card-text cap">${user.location.city}</p>`;
 
+//modal window section
       containerDiv.addEventListener('click', (e) => {
-        const greatGranpaModal = document.createElement('div');
-        const granpaModal = document.createElement('div');
-        const button = document.createElement('button');
-        const fatherModal = document.createElement('div');
-        greatGranpaModal.classList.add('modal-container');
-        granpaModal.classList.add('modal');
-        button.classList.add('modal-close.btn');
-        fatherModal.classList.add('modal-info-container');
-        body.appendChild(greatGranpaModal);
-        greatGranpaModal.appendChild(granpaModal);
-        granpaModal.appendChild(button);
-        granpaModal.appendChild(fatherModal);
-        button.innerHTML = `<button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>`;
-        fatherModal.innerHTML = `<img class="modal-img" src=${user.picture.large} alt="profile picture">
+
+        const modalContainer =  elementCreate('div', 'className', 'modal-container');
+        const modal = elementCreate('div', 'className', 'modal');
+        const modalInfo = elementCreate('div', 'className', 'modal-info-container');
+        const modalButtonContainer = elementCreate('div', 'className', 'modal-btn-container');
+        const modalPrevButton = elementCreate('button', 'className', 'modal-prev btn');
+        const modalNextButton = elementCreate('button', 'className', 'modal-next btn');
+        const modalCloseButton = elementCreate('button', 'className', 'modal-close-btn');
+
+        body.appendChild(modalContainer);
+        modalContainer.appendChild(modal);
+        modalContainer.appendChild(modalButtonContainer);
+        modalButtonContainer.appendChild(modalPrevButton);
+        modalButtonContainer.appendChild(modalNextButton);
+        modal.appendChild(modalCloseButton);
+        modal.appendChild(modalInfo);
+        modalPrevButton.textContent = 'Prev';
+        modalNextButton.textContent = 'Next';
+        modalCloseButton.innerHTML = `<strong>X</strong>`;
+        modalInfo.innerHTML = `<img class="modal-img" src=${user.picture.large} alt="profile picture">
         <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
         <p class="modal-text">${user.email}</p>
         <p class="modal-text cap">${user.location.city}</p>
@@ -64,14 +82,35 @@ async function fetchRequest(url) {
         <p class="modal-text">${user.phone}</p>
         <p class="modal-text">${user.location.street} ${user.location.city} ${user.location.state}</p>
         <p class="modal-text">Birthday: ${user.dob.date}</p>`;
-        button.addEventListener('click', (e) => {
-          greatGranpaModal.remove();
+        modalCloseButton.addEventListener('click', (e) => {
+          modalContainer.remove();
+        })
+
+//Next & prev button section
+        modalNextButton.addEventListener('click', (e) =>{
+          
+        })
+
+        modalPrevButton.addEventListener('click', () =>{
+
         })
 
       })
+//search user section
+    secondInput.addEventListener('click', (e) =>{
 
+      if(input.value === user.name.first || input.value === user.name.last){
+        containerDiv.style.display = 'inline';
+      } else {
+        containerDiv.style.display = 'none';
+      }
+    })
   })
-}
+};
+
+
+
+
 
 
 fetchRequest(urlRequest);

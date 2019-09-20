@@ -6,7 +6,7 @@ const body = document.querySelector('body');
 const searchDiv = document.querySelector('.search-container');
 searchDiv.innerHTML = `<form action="#" method="get">
     <input type="search" id="search-input" class="search-input" placeholder="Search...">
-    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
 </form>`;
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-submit');
@@ -57,6 +57,7 @@ async function fetchRequest(url) {
           containerDiv.style.display = 'inline';
         }else {
           containerDiv.style.display = 'none';
+          //galleryDiv.innerHTML = `<h3>The searched name is not in this list of employees<h3>`;
         }
       })
       body.addEventListener('keyup', () =>{

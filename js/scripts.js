@@ -9,7 +9,7 @@ searchDiv.innerHTML = `<form action="#" method="get">
     <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
 </form>`;
 const searchInput = document.getElementById('search-input');
-const searchButton = document.getElementById('search-submit');
+const searchButton = document.getElementById('serach-submit');
 
 //DRY function for creating elements
   const elementCreate = (elementName, property, value) => {
@@ -94,15 +94,18 @@ const modalWindow = (data, i) =>{
       </div>
   </div>
 
-  // Prev & next button section
+
   <div class="modal-btn-container">
       <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
       <button type="button" id="modal-next" class="modal-next btn">Next</button>
   </div>`;
+
+  //Modal Close button
   const close = document.getElementById('modal-close-btn');
   close.addEventListener('click', () =>{
     modalContainer.remove();
   })
+  //Prev and next section
   const modals = document.querySelectorAll('.modal-container');
   const employee = document.querySelectorAll('.card');
 

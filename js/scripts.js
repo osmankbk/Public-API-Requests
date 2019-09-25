@@ -110,35 +110,32 @@ return data;
 
 
 const modalInteraction = (data) =>{
-  const cards = document.querySelectorAll('.card');
-  const modalContainers = document.querySelectorAll('.modal-container');
-  const prevButtons = document.querySelectorAll('.modal-prev');
-  const nextButtons = document.querySelectorAll('.modal-next');
-  const arrayOfModals = [...modalContainers];
-  let counter = 0;
-  const arrayOfPrevButtons = [...prevButtons];
-console.log(modalContainers);
-
+const modalContainers = document.querySelectorAll('.modal-container');
 //Previous button
 modalContainers.forEach((modal, i) =>{
+  if(i === 0){
+    const children = modal.childNodes;
+    const prev = children[2].children[0];
+    prev.style.display = 'none';
+  } else if(i === 11){
+    const children = modal.childNodes;
+    const next = children[2].children[1];
+    next.style.display = 'none';
+  }
   modal.addEventListener('click', (e) =>{
     if(e.target.className === 'modal-prev btn'){
-    modal.style.display = 'none';
+      modal.style.display = 'none';
     modal.previousElementSibling.style.display = 'block';
-    if(i === 0){
-      e.target.style.display = 'none';
-    }
 
   } else {
     if(e.target.className === 'modal-next btn'){
     modal.style.display = 'none';
     modal.nextElementSibling.style.display = 'block';
-} if(i === 11){
-  e.target.style.display = 'none';
 }
   }
 })
 })
+
 }
 
 

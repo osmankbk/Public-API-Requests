@@ -66,14 +66,23 @@ const employeesInfoRequest = (data) =>{
   </div>`;
   modalContainer.style.display = 'none';
 
-  containerDiv.addEventListener('click', () =>{
+// Modal Window
+  containerDiv.addEventListener('click', (e) =>{
     modalContainer.style.display = 'block';
+
   })
+
+//Modal Close Button
   modalContainer.addEventListener('click', (e) =>{
+    const modalContainers = document.querySelectorAll('.modal-container');
     if(e.target.className === '.modal-close-btn' || e.target.textContent === 'X'){
-      modalContainer.remove();
+      modalContainers.forEach(modal =>{
+        modal.style.display = 'none';
+      })
     }
   })
+
+//Search Button
   searchButton.addEventListener('click', (e) =>{
     if(searchInput.value === user.name.first || searchInput.value === user.name.last){
       containerDiv.style.display = 'flex';
@@ -82,6 +91,8 @@ const employeesInfoRequest = (data) =>{
     }
 
   });
+
+//Restore all cards
   body.addEventListener('keyup', () =>{
     const cards = document.querySelectorAll('.card');
     if(searchInput.value === ''){
@@ -105,30 +116,28 @@ const modalInteraction = (data) =>{
   const nextButtons = document.querySelectorAll('.modal-next');
   const arrayOfModals = [...modalContainers];
   let counter = 0;
+  const arrayOfPrevButtons = [...prevButtons];
 console.log(modalContainers);
-prevButtons.forEach(prev => {
-  prev.addEventListener('click', (e) =>{
-    arrayOfModals[counter].style.display = 'none';
-    if(counter !== 0){
-      arrayOfModals[--counter].style.display = 'block';
-    }else {
-      counter = 11;
-      arrayOfModals[counter].style.display = 'block';
-    }
-  })
 
+//Previous button
+modalContainers.forEach((modal, i) =>{
+  modal.addEventListener('click', (e) =>{
+    if(e.target.className === 'modal-prev btn'){
+    modal.style.display = 'none';
+    modal.previousElementSibling.style.display = 'block';
+    if(i === 0){
+      e.target.style.display = 'none';
+    }
+
+  } else {
+    if(e.target.className === 'modal-next btn'){
+    modal.style.display = 'none';
+    modal.nextElementSibling.style.display = 'block';
+} if(i === 11){
+  e.target.style.display = 'none';
+}
+  }
 })
-nextButtons.forEach(next => {
-  next.addEventListener('click', (e) =>{
-    arrayOfModals[counter].style.display = 'none';
-    if(counter !== 11){
-      arrayOfModals[++counter].style.display = 'block';
-    }else {
-      counter = 0;
-      arrayOfModals[counter].style.display = 'block';
-    }
-  })
-
 })
 }
 

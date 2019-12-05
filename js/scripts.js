@@ -20,7 +20,6 @@ async function fetchRequest(url) {
 	try {
 		const request = await fetch(url);
 		const response = await request.json();
-    console.log(response)
 		return Promise.all(response.results);
 	} catch (error) {
 		gallery.innerHTML = `An error occured fetching the data, ${error}`;
@@ -53,7 +52,7 @@ const employeesInfoRequest = (data) => {
       <p class="modal-text cap">${user.location.city}</p>
       <hr>
       <p class="modal-text">${user.phone}</p>
-      <p class="modal-text">${user.location.street.name} ${user.location.city} ${user.location.state}</p>
+      <p class="modal-text">${user.location.street.number} ${user.location.street.name} ${user.location.city} ${user.location.state}</p>
       <p class="modal-text">Birthday: ${user.dob.date}</p>
       </div>
   </div>
